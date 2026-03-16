@@ -20,7 +20,7 @@ En 30 minutos dejar listo:
 ## Minuto 3-10: repo listo en GitHub
 1. Crea repo nuevo en GitHub.
 2. Nombre sugerido: `bootcamp-arquitecto-ia-cloud-native-copilot-2026`.
-3. Sube el contenido de esta carpeta final.
+3. Sube todo el contenido del proyecto (todas las carpetas y archivos).
 4. Haz commit inicial y push.
 
 Checklist:
@@ -50,8 +50,8 @@ Checklist:
 3. Ejecuta Reopen in Container.
 
 Checklist:
-- [ ] Contenedor inicia
-- [ ] Terminal corre dentro del contenedor
+- [ OK ] Contenedor inicia
+- [ OK ] Terminal corre dentro del contenedor
 
 ## Minuto 18-24: validación técnica mínima
 Ejecuta en terminal integrada:
@@ -74,7 +74,7 @@ az account show
 ```
 
 Checklist:
-- [ ] Todos los comandos responden sin error
+- [ OK ] Todos los comandos responden sin error
 
 ## Minuto 24-27: flujo de trabajo del curso
 - [ ] Crea rama `develop`
