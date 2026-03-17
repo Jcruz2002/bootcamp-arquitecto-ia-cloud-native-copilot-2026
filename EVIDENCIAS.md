@@ -56,3 +56,11 @@
 - Sync Policy: automatica (`prune`, `selfHeal`) + `CreateNamespace=true`.
 - Validacion final: `sync=Synced`, `health=Healthy` ✓
 - Prueba GitOps: cambio en chart (`deploy-frontend.yaml`) detectado por Argo CD, rollout automatico y nuevo `revision` aplicado ✓
+
+## Registro Lab 11
+- Evidencia: `labs/evidencias/lab-11-oidc/lab-11-oidc.md`.
+- Proveedor inicial OIDC: Keycloak local (`infra/docker-compose.oidc.yml`, `infra/oidc/keycloak/realm-bootcamp.json`).
+- Backend OIDC/JwtBearer: soporte modo `local|oidc` y politicas `IsAdmin`/`IsUser`.
+- Endpoints de prueba acceso por rol: `GET /api/v1/access/authenticated` y `GET /api/v1/access/admin`.
+- Frontend login OIDC: integrado en Next (`templates/next16-app/src/pages/login.js`) con variables en `.env.local.example`.
+- Validacion acceso por rol: 401 sin token, 403 user en admin, 200 admin en admin, 200 user autenticado ✓

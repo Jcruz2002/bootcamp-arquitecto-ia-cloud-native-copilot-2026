@@ -1,6 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { DEFAULT_API_BASE, consumeFlashMessage, getToken, setFlashMessage, setToken } from "../lib/auth";
+import {
+  AUTH_MODE,
+  DEFAULT_API_BASE,
+  OIDC_AUTHORITY,
+  OIDC_CLIENT_ID,
+  consumeFlashMessage,
+  getToken,
+  setFlashMessage,
+  setToken,
+} from "../lib/auth";
 import Toast from "../components/Toast";
 
 export default function LoginPage() {
@@ -12,6 +21,18 @@ export default function LoginPage() {
   const [toast, setToast] = useState({ message: "", type: "ok" });
 
   useEffect(() => {
+    if (AUTH_MODE === "oidc" && typeof window !== "undefined" && window.location.hash?.includes("access_token=")) {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const accessToken = params.get("access_token");
+      if (accessToken) {
+        setToken(accessToken);
+        window.history.replaceState({}, document.title, "/login");
+        setFlashMessage("Login OIDC exitoso", "ok");
+        router.replace("/users");
+        return;
+      }
+    }
+
     if (getToken()) {
       router.replace("/users");
       return;
@@ -54,15 +75,35 @@ export default function LoginPage() {
     }
   }
 
+  function loginWithOidc() {
+    if (typeof window === "undefined") return;
+    const redirectUri = `${window.location.origin}/login`;
+    const state = Math.random().toString(36).slice(2);
+    const authUrl = new URL(`${OIDC_AUTHORITY}/protocol/openid-connect/auth`);
+    authUrl.searchParams.set("client_id", OIDC_CLIENT_ID);
+    authUrl.searchParams.set("redirect_uri", redirectUri);
+    authUrl.searchParams.set("response_type", "token");
+    authUrl.searchParams.set("scope", "openid profile email");
+    authUrl.searchParams.set("state", state);
+    window.location.href = authUrl.toString();
+  }
+
   return (
     <main>
       <section className="container">
         <header className="header">
           <h1>Login - Ruta protegida</h1>
-          <p>Usa credenciales del Lab 03 para obtener JWT.</p>
+          <p>{AUTH_MODE === "oidc" ? "Login federado OIDC (Keycloak)" : "Usa credenciales del Lab 03 para obtener JWT."}</p>
         </header>
 
         <div className="panel auth-panel">
+          {AUTH_MODE === "oidc" ? (
+            <>
+              <button type="button" onClick={loginWithOidc}>Iniciar sesión con OIDC</button>
+              <p className="helper">Proveedor: {OIDC_AUTHORITY}</p>
+              <p className="helper">Cliente: {OIDC_CLIENT_ID}</p>
+            </>
+          ) : (
           <form onSubmit={onSubmit}>
             <label htmlFor="username">Username</label>
             <input
@@ -85,8 +126,9 @@ export default function LoginPage() {
               {loading ? "Ingresando..." : "Iniciar sesión"}
             </button>
           </form>
+          )}
 
-          <p className="helper">Credenciales demo: admin / password</p>
+          <p className="helper">Credenciales demo local: admin / password</p>
           {error ? <p className="message error">{error}</p> : null}
         </div>
       </section>

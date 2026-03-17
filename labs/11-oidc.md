@@ -1,7 +1,7 @@
 # Lab 11 - OIDC base (Entra, Google o Keycloak)
 
 ## Objetivo
-Implementar autenticación federada y autorización por roles en un proveedor inicial.
+Implementar autenticaciï¿½n federada y autorizaciï¿½n por roles en un proveedor inicial.
 
 ## Prerrequisitos
 - Backend y frontend desplegables.
@@ -10,19 +10,25 @@ Implementar autenticación federada y autorización por roles en un proveedor inic
 1. Configura cliente OIDC en proveedor.
 2. Integra login en frontend.
 3. Configura JwtBearer en backend.
-4. Define roles y políticas de autorización.
+4. Define roles y polï¿½ticas de autorizaciï¿½n.
 5. Prueba escenarios 401, 403 y 200.
 
-## Validación
-- Login exitoso y sesión estable.
+## Comandos sugeridos
+```bash
+git checkout -b lab-11
+git commit -m "lab11: Flujo OIDC base (Entra, Google o Keycloak)"
+git push origin lab-11
+
+## Validaciï¿½n
+- Login exitoso y sesiï¿½n estable.
 - Endpoints protegidos con control por rol.
 
-## Continuación recomendada
+## Continuaciï¿½n recomendada
 Para completar el escenario empresarial multi-proveedor, ejecuta `18-sso-oidc-entra-google-keycloak.md`.
 
-## Rúbrica
-- 40% autenticación.
-- 40% autorización.
+## Rï¿½brica
+- 40% autenticaciï¿½n.
+- 40% autorizaciï¿½n.
 - 20% evidencia.
 
 ## Entregables

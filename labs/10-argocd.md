@@ -14,11 +14,17 @@ Administrar despliegues declarativos sincronizados desde Git.
 4. Verifica estado Synced y Healthy.
 5. Prueba cambio Git y resincronizacion.
 
-## Validación
+## Comandos sugeridos
+```bash
+git checkout -b lab-10
+git commit -m "lab10: Kubernetes 1.35 y Helm"
+git push origin lab-1o
+
+## Validaciï¿½n
 - Argo CD refleja estado real del cluster.
 - Cambios en Git generan despliegue esperado.
 
-## Rúbrica
+## Rï¿½brica
 - 50% sincronizacion correcta.
 - 30% control de cambios.
 - 20% evidencia.
