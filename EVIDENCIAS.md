@@ -47,3 +47,12 @@
 - Estado runtime: `api-dotnet 1/1 Running`, `app-next 1/1 Running` ✓
 - Smoke test real: Frontend `HTTP 200` y Backend `/health` `200` con `{"status":"ok"...}` ✓
 - Extensión opcional: Kong/Konga no desplegado (pendiente opcional).
+
+## Registro Lab 10
+- Evidencia: `labs/evidencias/lab-10-argocd/lab-10-argocd.md`.
+- Argo CD: instalado en namespace `argocd` (manifiesto oficial + server-side apply).
+- Application: `enrollmenthub` en `infra/gitops/argocd/app.yaml`.
+- Fuente GitOps: repo `Jcruz2002/bootcamp-arquitecto-ia-cloud-native-copilot-2026`, rama `lab-10`, path `infra/helm/app`.
+- Sync Policy: automatica (`prune`, `selfHeal`) + `CreateNamespace=true`.
+- Validacion final: `sync=Synced`, `health=Healthy` ✓
+- Prueba GitOps: cambio en chart (`deploy-frontend.yaml`) detectado por Argo CD, rollout automatico y nuevo `revision` aplicado ✓
