@@ -22,7 +22,7 @@ python --version
 dotnet --version
 git checkout -b lab-02
 git add .
-git commit -m "lab01: flujo copilot arquitectura c�digo pruebas"
+git commit -m "lab02: flujo Codespaces y devcontainer reproducible"
 ```
 
 

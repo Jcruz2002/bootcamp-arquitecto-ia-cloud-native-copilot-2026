@@ -15,6 +15,7 @@ Construir una API mínima con persistencia y autenticación.
 
 ## Comandos sugeridos
 ```bash
+git checkout -b lab-03
 cd templates/dotnet10-api/src
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
@@ -26,6 +27,8 @@ dotnet build
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 dotnet test
+git commit -m "lab03: .NET 10 API con EF Core y JWT"
+
 ```
 
 ## Validación
