@@ -5,7 +5,7 @@ spec:
   replicas: {{ .Values.frontend.replicas }}
   selector: { matchLabels: { app: app-next } }
   template:
-    metadata: { labels: { app: app-next } }
+    metadata: { labels: { app: app-next, gitops-change: "lab10-resync-1" } }
     spec:
       containers:
       - name: web
