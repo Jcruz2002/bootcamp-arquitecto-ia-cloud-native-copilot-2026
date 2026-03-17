@@ -3,14 +3,36 @@ kind: Application
 metadata:
   name: enrollmenthub
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/OWNER/REPO.git
+    repoURL: https://github.com/Jcruz2002/bootcamp-arquitecto-ia-cloud-native-copilot-2026.git
     targetRevision: main
     path: infra/helm/app
+    helm:
+      parameters:
+      - name: backend.image
+        value: ghcr.io/jcruz2002/backend:lab07
+      - name: frontend.image
+        value: ghcr.io/jcruz2002/frontend:lab07
+      - name: backend.imagePullPolicy
+        value: IfNotPresent
+      - name: frontend.imagePullPolicy
+        value: IfNotPresent
+      - name: backend.replicas
+        value: "1"
+      - name: frontend.replicas
+        value: "1"
+      - name: ingress.enabled
+        value: "false"
   destination:
     server: https://kubernetes.default.svc
     namespace: app
   syncPolicy:
-    automated: { selfHeal: true, prune: true }
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
