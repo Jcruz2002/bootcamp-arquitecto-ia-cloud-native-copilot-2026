@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Jcruz2002/bootcamp-arquitecto-ia-cloud-native-copilot-2026.git
-    targetRevision: main
+    targetRevision: lab-10
     path: infra/helm/app
     helm:
       parameters:
@@ -24,7 +24,7 @@ spec:
       - name: backend.replicas
         value: "1"
       - name: frontend.replicas
-        value: "1"
+        value: "2"
       - name: ingress.enabled
         value: "false"
   destination:
