@@ -84,6 +84,9 @@ await client.SendMessageAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes(mess
 - 30% evidencias y comparación Redis vs Azure Queue.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Rama `lab-24`.
 - EVIDENCIAS.md con:
   - comandos ejecutados,

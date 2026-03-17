@@ -261,6 +261,9 @@ En Xcode: seleccionar iPhone 16 simulator y presionar `Cmd+R`.
 - 30% pruebas básicas y evidencia en emulador.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Código en rama `lab-23`.
 - EVIDENCIAS.md con:
   - Capturas del emulador Android con la lista de usuarios.

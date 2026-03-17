@@ -26,5 +26,8 @@ Para completar el escenario empresarial multi-proveedor, ejecuta `18-sso-oidc-en
 - 20% evidencia.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - EVIDENCIAS.md con pruebas de acceso por rol.
 

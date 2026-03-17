@@ -23,5 +23,8 @@ Desplegar en Kubernetes desde Azure Pipelines con gates por ambiente.
 - Pods saludables post-deploy.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Capturas de aprobaciones.
 - Evidencia de rollout por ambiente.

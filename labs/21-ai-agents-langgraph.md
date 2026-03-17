@@ -161,6 +161,9 @@ OPENAI_API_VERSION=2025-01-01-preview
 - 30% exposición como endpoint FastAPI, seguridad y evidencia.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Código en rama `lab-21`.
 - EVIDENCIAS.md con:
   - Diagrama Mermaid del grafo (texto o imagen).

@@ -176,6 +176,9 @@ EXPO_PUBLIC_OIDC_CLIENT_ID=mobile-app
 - 30% evidencia en emulador o dispositivo físico.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Código en rama `lab-22`.
 - EVIDENCIAS.md con:
   - Capturas de pantalla del emulador (login, lista, detalle).

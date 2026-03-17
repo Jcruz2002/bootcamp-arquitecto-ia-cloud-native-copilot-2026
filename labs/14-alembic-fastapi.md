@@ -31,6 +31,9 @@ alembic upgrade head
 - 20% evidencia.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - EVIDENCIAS.md con revisiones y estado final.
 
 

@@ -19,5 +19,8 @@ Vincular código, PRs, pipelines y despliegues con Azure Boards.
 - Dashboard muestra trazabilidad completa.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Capturas de tablero y vínculos.
 - Evidencia de release con work items cerrados.

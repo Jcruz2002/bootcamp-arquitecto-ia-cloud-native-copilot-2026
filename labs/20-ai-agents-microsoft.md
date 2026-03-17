@@ -139,6 +139,9 @@ AZURE_OPENAI_DEPLOYMENT=gpt-4o
 - 30% seguridad (sin claves hardcodeadas) y evidencia de logs.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Código en rama `lab-20`.
 - EVIDENCIAS.md con:
   - Log de ejecución mostrando qué tools invocó el agente.

@@ -25,5 +25,8 @@ Publicar imágenes de backend y frontend en Azure Container Registry.
 - Tags correctos por build.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Evidencia de repositorios en ACR.
 - Evidencia de pipeline con push exitoso.

@@ -1,8 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "SSmP+3EnFYA=",
+  "dgSpecHash": "yLjMdH6Y3x4=",
   "success": true,
   "projectFilePath": "/workspaces/bootcamp-arquitecto-ia-cloud-native-copilot-2026/templates/dotnet10-api/src/Api.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.0-preview.3.25172.1/microsoft.aspnetcore.authentication.jwtbearer.10.0.0-preview.3.25172.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.entityframeworkcore/10.0.0-preview.3.25171.6/microsoft.entityframeworkcore.10.0.0-preview.3.25171.6.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.abstractions/10.0.0-preview.3.25171.6/microsoft.entityframeworkcore.abstractions.10.0.0-preview.3.25171.6.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.abstractions/8.0.1/microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.logging/8.0.1/microsoft.identitymodel.logging.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.protocols/8.0.1/microsoft.identitymodel.protocols.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.protocols.openidconnect/8.0.1/microsoft.identitymodel.protocols.openidconnect.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.identitymodel.tokens/8.0.1/microsoft.identitymodel.tokens.8.0.1.nupkg.sha512",
+    "/home/codespace/.nuget/packages/system.identitymodel.tokens.jwt/8.0.1/system.identitymodel.tokens.jwt.8.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

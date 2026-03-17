@@ -1,4 +1,4 @@
-# Lab 01 - Copilot para arquitectura y código
+# Lab 01 - Copilot para arquitectura y cï¿½digo
 
 ## Objetivo
 Dominar un flujo practico con Copilot para diseno, implementacion, pruebas y documentacion.
@@ -12,7 +12,7 @@ Dominar un flujo practico con Copilot para diseno, implementacion, pruebas y doc
 2. Pide a Copilot una propuesta de arquitectura por capas.
 3. Genera un endpoint inicial y solicita explicacion linea por linea.
 4. Solicita refactor para legibilidad y mantenibilidad.
-5. Genera pruebas unitarias básicas.
+5. Genera pruebas unitarias bï¿½sicas.
 6. Pide una lista de riesgos tecnicos y mejoras.
 
 ## Comandos sugeridos
@@ -20,19 +20,21 @@ Dominar un flujo practico con Copilot para diseno, implementacion, pruebas y doc
 # ejemplo de commit por hito
 git checkout -b lab-01
 git add .
-git commit -m "lab01: flujo copilot arquitectura código pruebas"
+git commit -m "lab01: flujo copilot arquitectura cï¿½digo pruebas"
 ```
 
-## Validación
-- Existe evidencia de prompts y respuestas útiles.
-- Se implemento al menos una mejora tras revisión de Copilot.
+## Validaciï¿½n
+- Existe evidencia de prompts y respuestas ï¿½tiles.
+- Se implemento al menos una mejora tras revisiï¿½n de Copilot.
 
-## Rúbrica
+## Rï¿½brica
 - 40% calidad de prompts.
-- 40% calidad del código generado y refinado.
+- 40% calidad del cï¿½digo generado y refinado.
 - 20% evidencia y conclusiones.
 
 ## Entregables
-- EVIDENCIAS.md con prompts usados y resultados.
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
 
+- EVIDENCIAS.md con prompts usados y resultados:
 

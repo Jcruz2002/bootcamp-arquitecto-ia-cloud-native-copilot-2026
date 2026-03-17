@@ -22,15 +22,18 @@ python --version
 dotnet --version
 ```
 
-## Validación
+## Validaciï¿½n
 - El entorno inicia sin errores.
 - Las herramientas requeridas estan disponibles.
 
-## Rúbrica
+## Rï¿½brica
 - 50% entorno funcional.
 - 30% reproducibilidad documentada.
-- 20% evidencia técnica.
+- 20% evidencia tï¿½cnica.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - EVIDENCIAS.md con verificacion de herramientas.
 

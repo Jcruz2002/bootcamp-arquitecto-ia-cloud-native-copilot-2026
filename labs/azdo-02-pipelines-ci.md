@@ -23,5 +23,8 @@ Crear pipeline de integración continua para backend y frontend.
 - Fallos de test bloquean integración.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - YAML del pipeline.
 - Evidencia de corrida exitosa y fallida controlada.

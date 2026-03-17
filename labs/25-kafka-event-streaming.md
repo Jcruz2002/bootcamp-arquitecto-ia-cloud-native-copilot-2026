@@ -85,6 +85,9 @@ Publicar mensajes con la misma key y verificar orden dentro de una partición.
 - 30% evidencia de pruebas y trazabilidad.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Rama `lab-25`.
 - EVIDENCIAS.md con:
   - comandos de topic,

@@ -81,6 +81,9 @@ Ejemplo policy XML:
 - 30% evidencia de observabilidad y pruebas 200/401/429.
 
 ## Entregables
+- Registra los resultados obtenidos en la carpeta labs/evidencias.
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+
 - Rama `lab-26`.
 - EVIDENCIAS.md con:
   - captura de API publicada en APIM,
