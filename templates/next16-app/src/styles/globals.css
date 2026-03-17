@@ -1,0 +1,266 @@
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --text: #10233f;
+  --muted: #5d6b82;
+  --primary: #0b61ff;
+  --primary-2: #1f8bff;
+  --danger: #d7263d;
+  --ok: #198754;
+  --border: #dde6f2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top right, #e6f2ff, var(--bg) 40%);
+  color: var(--text);
+}
+
+main {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.container {
+  width: 100%;
+  max-width: 920px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(16, 35, 63, 0.08);
+  overflow: hidden;
+}
+
+.header {
+  background: linear-gradient(110deg, var(--primary), var(--primary-2));
+  color: #fff;
+  padding: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.header p {
+  margin: 8px 0 0;
+  opacity: 0.9;
+}
+
+.header-with-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-with-actions button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0;
+}
+
+.panel {
+  padding: 18px;
+}
+
+.panel + .panel {
+  border-left: 1px solid var(--border);
+}
+
+.auth-panel {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  border: 1px solid #cfd8e7;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--muted);
+  margin-top: 8px;
+  width: 100%;
+}
+
+.btn-edit {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  font-size: 0.8rem;
+  padding: 5px 10px;
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  font-size: 0.8rem;
+  padding: 5px 10px;
+}
+
+.message {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.message.ok {
+  color: var(--ok);
+}
+
+.helper {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fcfdff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.card-editing {
+  border-color: var(--primary);
+  background: #f0f6ff;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-body h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.card-body p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* ── Toast ──────────────────────────────────── */
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 6px 24px rgba(16,35,63,0.18);
+  z-index: 9999;
+  transition: opacity 0.3s, transform 0.3s;
+  min-width: 260px;
+  max-width: 360px;
+}
+
+.toast-ok   { background: var(--ok);     color: #fff; }
+.toast-error { background: var(--danger); color: #fff; }
+
+.toast-in  { opacity: 1; transform: translateY(0); }
+.toast-out { opacity: 0; transform: translateY(-12px); }
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+@media (max-width: 880px) {
+  .toast {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel + .panel {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+}

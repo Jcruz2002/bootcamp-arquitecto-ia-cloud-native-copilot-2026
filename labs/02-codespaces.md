@@ -23,6 +23,7 @@ dotnet --version
 git checkout -b lab-02
 git add .
 git commit -m "lab02: flujo Codespaces y devcontainer reproducible"
+git push origin lab02
 ```
 
 
@@ -33,11 +34,11 @@ git commit -m "lab02: flujo Codespaces y devcontainer reproducible"
 ## R�brica
 - 50% entorno funcional.
 - 30% reproducibilidad documentada.
-- 20% evidencia t�cnica.
+- 20% evidencia técnica.
 
 ## Entregables
 - Registra los resultados obtenidos en la carpeta labs/evidencias.
-- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema. Si tu evidencia requiere mas de un archivo, crea una carpeta con esa misma nomenclatura y guarda alli todos los archivos (por ejemplo: .md, .pdf, .docx, imagenes o capturas).
 
 - EVIDENCIAS.md con verificacion de herramientas.
 

@@ -27,7 +27,8 @@ dotnet build
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 dotnet test
-git commit -m "lab03: .NET 10 API con EF Core y JWT"
+git commit -m "lab03: flujo .NET 10 API con EF Core y JWT"
+git push origin lab03
 
 ```
 
@@ -43,7 +44,7 @@ git commit -m "lab03: .NET 10 API con EF Core y JWT"
 
 ## Entregables
 - Registra los resultados obtenidos en la carpeta labs/evidencias.
-- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema. Si tu evidencia requiere mas de un archivo, crea una carpeta con esa misma nomenclatura y guarda alli todos los archivos (por ejemplo: .md, .pdf, .docx, imagenes o capturas).
 
 - EVIDENCIAS.md con pruebas y llamadas a endpoints.
 

@@ -20,7 +20,9 @@ Dominar un flujo practico con Copilot para diseno, implementacion, pruebas y doc
 # ejemplo de commit por hito
 git checkout -b lab-01
 git add .
-git commit -m "lab01: flujo copilot arquitectura c�digo pruebas"
+git commit -m "lab01: flujo copilot arquitectura codigo pruebas"
+git push origin lab01
+
 ```
 
 ## Validaci�n
@@ -29,12 +31,12 @@ git commit -m "lab01: flujo copilot arquitectura c�digo pruebas"
 
 ## R�brica
 - 40% calidad de prompts.
-- 40% calidad del c�digo generado y refinado.
+- 40% calidad del código generado y refinado.
 - 20% evidencia y conclusiones.
 
 ## Entregables
 - Registra los resultados obtenidos en la carpeta labs/evidencias.
-- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema y usa el tipo de archivo que aplique segun el lab (por ejemplo: .md, .pdf, .docx, imagenes o carpeta de capturas).
+- Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema. Si tu evidencia requiere mas de un archivo, crea una carpeta con esa misma nomenclatura y guarda alli todos los archivos (por ejemplo: .md, .pdf, .docx, imagenes o capturas).
 
 - EVIDENCIAS.md con prompts usados y resultados:
 
