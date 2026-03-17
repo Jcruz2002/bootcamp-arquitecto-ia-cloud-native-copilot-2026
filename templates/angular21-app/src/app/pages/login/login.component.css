@@ -1,0 +1,45 @@
+.auth-panel {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.3rem 1.25rem;
+}
+
+.auth-panel h2 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.help {
+  color: #425a80;
+  margin: 0.45rem 0 0.3rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+label {
+  margin-top: 0.25rem;
+  font-weight: 600;
+  color: #233558;
+}
+
+button {
+  margin-top: 0.65rem;
+  width: 100%;
+}
+
+.field-error {
+  color: #b42318;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.message.error {
+  margin-top: 0.85rem;
+  color: #b42318;
+}

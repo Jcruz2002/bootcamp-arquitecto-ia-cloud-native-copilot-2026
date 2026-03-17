@@ -1,0 +1,108 @@
+:root {
+	--bg-0: #f6f7fb;
+	--bg-1: #e6edf8;
+	--bg-2: #f6edc9;
+	--ink-900: #0f172a;
+	--ink-700: #334155;
+	--line: #d8e1eb;
+	--panel: rgb(255 255 255 / 82%);
+	--panel-strong: #ffffff;
+	--primary: #0f172a;
+	--primary-hover: #1e293b;
+	--danger: #b42318;
+	--danger-hover: #941f15;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	min-height: 100%;
+}
+
+body {
+	font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+	color: var(--ink-900);
+	background:
+		radial-gradient(circle at 10% 18%, var(--bg-2) 0, transparent 28%),
+		radial-gradient(circle at 86% 24%, #d8e4ff 0, transparent 34%),
+		linear-gradient(165deg, var(--bg-0) 0%, var(--bg-1) 46%, #f1f5f9 100%);
+	background-attachment: fixed;
+}
+
+app-root {
+	display: block;
+	min-height: 100dvh;
+}
+
+button {
+	border: 1px solid var(--primary);
+	background: var(--primary);
+	color: #f8fafc;
+	border-radius: 12px;
+	cursor: pointer;
+	padding: 0.62rem 0.95rem;
+	font-weight: 700;
+	transition: transform 120ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+button:hover:not(:disabled) {
+	transform: translateY(-1px);
+	background: var(--primary-hover);
+	border-color: var(--primary-hover);
+}
+
+button:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+	transform: none;
+}
+
+.btn-secondary {
+	background: var(--panel-strong);
+	color: var(--ink-900);
+	border-color: var(--line);
+}
+
+.btn-secondary:hover:not(:disabled) {
+	background: #f8fafc;
+	border-color: #bcc8d6;
+}
+
+.btn-danger {
+	background: var(--danger);
+	border-color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+	background: var(--danger-hover);
+	border-color: var(--danger-hover);
+}
+
+input {
+	width: 100%;
+	border: 1px solid #cfd8e3;
+	border-radius: 12px;
+	padding: 0.78rem 0.85rem;
+	font-size: 0.95rem;
+	background: #f8fafc;
+	transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+input:focus {
+	outline: none;
+	border-color: #5a7ab8;
+	box-shadow: 0 0 0 3px rgb(90 122 184 / 16%);
+}
+
+.panel {
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	padding: 1rem;
+	box-shadow: 0 10px 30px rgb(15 23 42 / 8%);
+	backdrop-filter: blur(2px);
+}

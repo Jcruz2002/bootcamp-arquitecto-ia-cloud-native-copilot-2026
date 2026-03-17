@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: api-dotnet }
+metadata: { name: api-dotnet, labels: { app: api-dotnet } }
 spec:
-  replicas: 2
+  replicas: {{ .Values.backend.replicas }}
   selector: { matchLabels: { app: api-dotnet } }
   template:
     metadata: { labels: { app: api-dotnet } }
@@ -10,8 +10,26 @@ spec:
       containers:
       - name: api
         image: {{ .Values.backend.image }}
-        ports: [{containerPort: 8080}]
+        imagePullPolicy: {{ .Values.backend.imagePullPolicy | default "Always" }}
+        ports: 
+        - name: http
+          containerPort: {{ .Values.backend.port }}
         readinessProbe:
-          httpGet: { path: /health, port: 8080 }
-          initialDelaySeconds: 5
+          httpGet: 
+            path: /health
+            port: {{ .Values.backend.port }}
+          initialDelaySeconds: 10
           periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.backend.port }}
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi

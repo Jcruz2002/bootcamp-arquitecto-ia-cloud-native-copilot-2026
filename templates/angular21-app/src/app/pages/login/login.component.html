@@ -1,0 +1,24 @@
+<section class="panel auth-panel">
+  <h2>Iniciar sesión</h2>
+  <p class="help">Usa las credenciales del Lab 03: admin / password.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label for="username">Username</label>
+    <input id="username" formControlName="username" placeholder="admin" />
+    <p class="field-error" *ngIf="form.controls.username.touched && form.controls.username.invalid">
+      Username requerido (mínimo 3 caracteres).
+    </p>
+
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" placeholder="password" />
+    <p class="field-error" *ngIf="form.controls.password.touched && form.controls.password.invalid">
+      Password requerido (mínimo 4 caracteres).
+    </p>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
+    </button>
+  </form>
+
+  <p class="message error" *ngIf="error">{{ error }}</p>
+</section>

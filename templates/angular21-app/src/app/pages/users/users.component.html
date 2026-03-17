@@ -1,0 +1,60 @@
+<section class="grid">
+  <aside class="panel">
+    <h2>{{ isEdit ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label for="name">Nombre</label>
+      <input id="name" formControlName="name" placeholder="Juan Perez" />
+      <p class="field-error" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+        Nombre requerido (mínimo 3 caracteres).
+      </p>
+
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" placeholder="juan@demo.com" />
+      <p class="field-error" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+        Email válido requerido.
+      </p>
+
+      <button type="submit" [disabled]="saving()">
+        {{ saving() ? 'Guardando...' : isEdit ? 'Actualizar' : 'Crear usuario' }}
+      </button>
+
+      <button class="btn-secondary" type="button" *ngIf="isEdit" (click)="cancelEdit()">
+        Cancelar edición
+      </button>
+    </form>
+  </aside>
+
+  <section class="panel">
+    <div class="toolbar">
+      <h2>Usuarios</h2>
+      <div class="toolbar-actions">
+        <button class="btn-secondary" (click)="reloadUsers()" [disabled]="loadingUsers()">
+          {{ loadingUsers() ? 'Cargando...' : 'Refrescar' }}
+        </button>
+        <button class="btn-danger" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <p *ngIf="loadingUsers()">Cargando usuarios...</p>
+    <p *ngIf="!loadingUsers() && users().length === 0">No hay usuarios todavía.</p>
+
+    <ul class="list" *ngIf="!loadingUsers() && users().length > 0">
+      <li class="card" *ngFor="let user of users()">
+        <div>
+          <h3>{{ user.name }}</h3>
+          <p>{{ user.email }}</p>
+          <p>Estado: {{ user.status || 'active' }}</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-secondary" (click)="edit(user)" [disabled]="deletingId() === user.id">
+            Editar
+          </button>
+          <button class="btn-danger" (click)="remove(user)" [disabled]="deletingId() === user.id">
+            {{ deletingId() === user.id ? 'Eliminando...' : 'Eliminar' }}
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</section>

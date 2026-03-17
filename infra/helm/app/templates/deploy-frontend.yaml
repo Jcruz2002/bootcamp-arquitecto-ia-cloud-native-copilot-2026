@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: app-next }
+metadata: { name: app-next, labels: { app: app-next } }
 spec:
-  replicas: 2
+  replicas: {{ .Values.frontend.replicas }}
   selector: { matchLabels: { app: app-next } }
   template:
     metadata: { labels: { app: app-next } }
@@ -10,4 +10,14 @@ spec:
       containers:
       - name: web
         image: {{ .Values.frontend.image }}
-        ports: [{containerPort: 3000}]
+        imagePullPolicy: {{ .Values.frontend.imagePullPolicy | default "Always" }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.frontend.port }}
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi

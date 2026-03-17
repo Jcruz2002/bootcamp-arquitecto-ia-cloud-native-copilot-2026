@@ -11,20 +11,23 @@ Implementar un frontend Angular que consuma los mismos endpoints del backend.
 2. Crea componentes de listado y formulario.
 3. Implementa validaciones de formulario.
 4. Maneja errores HTTP de forma uniforme.
-5. Documenta comparacion técnica vs Next.
+5. Documenta comparacion tecnica vs Next.
 
 ## Comandos sugeridos
 ```bash
 cd templates/angular21-app
 npm install
 npm start
+git checkout -b lab-06
+git commit -m "lab06: Angular 21 frontend alternativo"
+git push origin lab-06
 ```
 
-## Validación
+## Validaciï¿½n
 - CRUD basico disponible desde Angular.
 - Validaciones y errores visibles.
 
-## Rúbrica
+## Rï¿½brica
 - 40% funcionalidad.
 - 30% arquitectura frontend.
 - 30% evidencia.

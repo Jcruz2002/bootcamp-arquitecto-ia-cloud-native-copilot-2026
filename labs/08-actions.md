@@ -1,7 +1,7 @@
 # Lab 08 - GitHub Actions CI/CD
 
 ## Objetivo
-Automatizar build, pruebas y publicación de imágenes.
+Automatizar build, pruebas y publicacion de imagenes.
 
 ## Prerrequisitos
 - Lab 07 completado.
@@ -13,11 +13,17 @@ Automatizar build, pruebas y publicación de imágenes.
 4. Agrega protecciones minimas de rama.
 5. Ejecuta pipeline en pull request y en main.
 
-## Validación
-- CI en verde en PR.
-- Release publica imágenes correctamente.
+## Comandos sugeridos
+```bash
+git checkout -b lab-08
+git commit -m "lab08: GitHub Actions CI/CD"
+git push origin lab-08
 
-## Rúbrica
+## Validaciï¿½n
+- CI en verde en PR.
+- Release publica imï¿½genes correctamente.
+
+## Rï¿½brica
 - 40% pipeline CI.
 - 40% pipeline release.
 - 20% evidencia.

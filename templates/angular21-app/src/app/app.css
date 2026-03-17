@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.layout {
+  min-height: 100dvh;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.4rem 1rem 2.3rem;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+  letter-spacing: -0.03em;
+  color: #0b1733;
+}
+
+.header p {
+  margin-top: 0.45rem;
+  color: #2f4b77;
+  max-width: 74ch;
+}
+
+.content {
+  margin-top: 0.8rem;
+}

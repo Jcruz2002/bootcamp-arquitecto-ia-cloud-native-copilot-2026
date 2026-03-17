@@ -1,0 +1,101 @@
+.grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.05rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+label {
+  margin-top: 0.2rem;
+  font-weight: 600;
+  color: #233558;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.55rem;
+}
+
+.list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.card {
+  border: 1px solid #d7e0ea;
+  border-radius: 14px;
+  padding: 0.85rem;
+  background: rgb(255 255 255 / 82%);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+}
+
+.card p {
+  margin: 0.1rem 0;
+  color: #34496f;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 118px;
+}
+
+.field-error {
+  color: #b42318;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card {
+    flex-direction: column;
+  }
+
+  .card-actions {
+    flex-direction: row;
+  }
+
+  .panel h2 {
+    font-size: 1.75rem;
+  }
+}
