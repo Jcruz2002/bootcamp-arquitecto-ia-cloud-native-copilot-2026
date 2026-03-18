@@ -13,11 +13,18 @@ Estandarizar CI/CD para multiples servicios y ambientes con control de aprobacio
 4. Ejecuta una promocion dev->stage->prod.
 5. Registra evidencia de trazabilidad.
 
-## Validación
+## Comandos sugeridos
+```bash
+git checkout -b lab-17
+git commit -m "lab17:  Workflows reutilizables y environments"
+git push origin lab-17
+```
+
+## Validaciï¿½n
 - Reuso de workflows confirmado.
 - Flujo por ambientes funcionando con reglas.
 
-## Rúbrica
+## Rï¿½brica
 - 40% reusable workflows.
 - 40% governance por environments.
 - 20% evidencia.
