@@ -49,6 +49,12 @@ public sealed class AppDb : DbContext
 
             // Índice para búsquedas por status
             entity.HasIndex(e => e.Status);
+
+            // Índice para ordenamiento/paginación por fecha de creación.
+            entity.HasIndex(e => e.CreatedAt);
+
+            // Índice compuesto para filtros por status + orden por fecha.
+            entity.HasIndex(e => new { e.Status, e.CreatedAt });
         });
     }
 }

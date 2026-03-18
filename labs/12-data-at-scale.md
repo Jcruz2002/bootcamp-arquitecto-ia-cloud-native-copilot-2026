@@ -1,7 +1,7 @@
-# Lab 12 - Data at Scale y optimización
+# Lab 12 - Data at Scale y optimizaciï¿½n
 
 ## Objetivo
-Evalúar y mejorar rendimiento con volumen de datos realista.
+Evaluar y mejorar rendimiento con volumen de datos realista.
 
 ## Prerrequisitos
 - Persistencia activa en PostgreSQL u otro motor.
@@ -9,16 +9,22 @@ Evalúar y mejorar rendimiento con volumen de datos realista.
 ## Paso a paso
 1. Carga dataset de volumen medio o alto.
 2. Mide latencia de consultas clave.
-3. Agrega índices y compara resultados.
-4. Evalúa cache de lectura frecuente (Redis recomendado).
+3. Agrega ï¿½ndices y compara resultados.
+4. Evalï¿½a cache de lectura frecuente (Redis recomendado).
 5. Documenta mejoras y trade-offs.
 
-## Validación
-- Existe comparativa antes y después.
+## Comandos sugeridos
+```bash
+git checkout -b lab-12
+git commit -m "lab12: Flujo Data at Scale y optimizacion"
+git push origin lab-12
+
+## Validaciï¿½n
+- Existe comparativa antes y despuï¿½s.
 - Se observan mejoras medibles.
 
-## Rúbrica
-- 50% análisis de rendimiento.
+## Rï¿½brica
+- 50% anï¿½lisis de rendimiento.
 - 30% mejoras aplicadas.
 - 20% evidencia.
 
@@ -26,6 +32,6 @@ Evalúar y mejorar rendimiento con volumen de datos realista.
 - Registra los resultados obtenidos en la carpeta labs/evidencias.
 - Crea la evidencia por laboratorio siguiendo la nomenclatura lab-XX-tema. Si tu evidencia requiere mas de un archivo, crea una carpeta con esa misma nomenclatura y guarda alli todos los archivos (por ejemplo: .md, .pdf, .docx, imagenes o capturas).
 
-- EVIDENCIAS.md con métricas y conclusiones.
+- EVIDENCIAS.md con mï¿½tricas y conclusiones.
 
 

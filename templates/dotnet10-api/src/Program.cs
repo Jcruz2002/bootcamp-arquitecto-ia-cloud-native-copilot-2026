@@ -13,6 +13,21 @@ builder.Services.AddDbContext<AppDb>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Cache distribuido para lecturas frecuentes (Lab 12).
+var redisConnection = builder.Configuration["Redis:ConnectionString"];
+if (!string.IsNullOrWhiteSpace(redisConnection))
+{
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConnection;
+        options.InstanceName = "bootcamp-api:";
+    });
+}
+else
+{
+    builder.Services.AddDistributedMemoryCache();
+}
+
 // Configurar autenticación (local JWT u OIDC) y políticas de autorización por rol.
 builder.Services.AddJwtAuth(builder.Configuration);
 builder.Services.AddCors(options =>

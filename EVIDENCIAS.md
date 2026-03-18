@@ -64,3 +64,11 @@
 - Endpoints de prueba acceso por rol: `GET /api/v1/access/authenticated` y `GET /api/v1/access/admin`.
 - Frontend login OIDC: integrado en Next (`templates/next16-app/src/pages/login.js`) con variables en `.env.local.example`.
 - Validacion acceso por rol: 401 sin token, 403 user en admin, 200 admin en admin, 200 user autenticado ✓
+
+## Registro Lab 12
+- Evidencia: `labs/evidencias/lab-12-data-at-scale/lab-12-data-at-scale.md`.
+- Dataset: 200,002 usuarios en PostgreSQL (170,168 activos).
+- Baseline SQL: Query A `130.929 ms`, Query B `119.335 ms`.
+- Mejora con indices: Query A `0.700 ms`, Query B `1.510 ms`.
+- Cache Redis (lectura frecuente): warm avg `0.011319 s` vs no-cache avg `0.019575 s`.
+- Conclusiones y trade-offs documentados (latencia vs costo de escritura/cache consistency).
