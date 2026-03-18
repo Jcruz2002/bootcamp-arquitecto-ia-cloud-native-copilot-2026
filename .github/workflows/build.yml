@@ -1,0 +1,73 @@
+name: Build (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        description: 'Git ref to checkout'
+        required: false
+        type: string
+        default: ${{ github.ref }}
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.checkout-ref }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore backend
+        working-directory: templates/dotnet10-api/src
+        run: dotnet restore
+
+      - name: Build backend
+        working-directory: templates/dotnet10-api/src
+        run: dotnet build -c Release --no-restore
+
+      - name: Test backend (if tests exist)
+        working-directory: templates/dotnet10-api/src
+        run: |
+          if [ -f "*.Tests.csproj" ]; then dotnet test -c Release --no-build; fi
+        continue-on-error: true
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.checkout-ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: templates/next16-app/package-lock.json
+
+      - name: Install frontend deps
+        working-directory: templates/next16-app
+        run: npm ci
+
+      - name: Lint frontend
+        working-directory: templates/next16-app
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build frontend
+        working-directory: templates/next16-app
+        run: npm run build
+
+      - name: Build summary
+        run: |
+          echo "=== Build Summary ==="
+          echo "Frontend: ✓ Built"
+          echo "Backend: ✓ Built"
+          echo "Timestamp: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"

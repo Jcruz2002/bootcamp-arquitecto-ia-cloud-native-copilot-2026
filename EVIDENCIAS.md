@@ -106,3 +106,20 @@
 - Stack observabilidad: `observabilidad/prometheus-grafana/docker-compose.yml` (Prometheus + Grafana).
 - Scrape target validado: job `api-dotnet` contra `host.docker.internal:8080/metrics` en estado `up`.
 - Dashboard provisionado y validado: `Bootcamp API Overview` (`uid=bootcamp-api-overview`) con datos reales.
+
+## Registro Lab 17
+- Evidencia: `labs/evidencias/lab-17-reusables-environments/` (2 archivos markdown).
+- Propósito: estandarizar CI/CD con workflows reutilizables y governance por environments.
+- **Workflows Reutilizables Creados**:
+  - `build.yml`: Encapsula build backend (.NET) + frontend (Next.js), usado por CI/Deploy/Promotion.
+  - `helm-deploy.yml`: Encapsula despliegue Helm parametrizable, usado por Deploy/Promotion en 3+ ocasiones.
+- **Workflows Refactorizados**:
+  - `ci.yml`: Simplificado a 12 líneas, ahora usa `build.yml` (3 jobs de 46 líneas → 1 job).
+  - `deploy.yml`: Refactorizado a deployment multi-ambiente con selector input, usa `helm-deploy.yml` (3 jobs repetidos → reusable).
+- **Workflow Nuevo**:
+  - `promotion.yml`: Flujo de promoción controlada (dev→stage→prod) con validación, build y aprobaciones progresivas.
+- **Governance Implementado**:
+  - 3 ambientes GitHub: `dev` (auto-deploy), `stage` (aprobación 1+), `prod` (aprobación 2+).
+  - Protecciones: status checks, branches up-to-date, reviewers requeridos.
+- **Reutilización Lograda**: 2 workflows reutilizables usados en 5+ lugares, reducción 111→270 líneas con DRY principle.
+- **Documentación**: diagrama ASCII de flujo + checklist de validación + instrucciones de configuración en `diagrama-flujo.md`.

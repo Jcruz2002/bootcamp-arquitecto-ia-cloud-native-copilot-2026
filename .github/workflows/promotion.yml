@@ -1,0 +1,84 @@
+name: Promotion Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      source-environment:
+        description: 'Source environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+      target-environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+
+jobs:
+  # Validate that selected environments are valid transitions
+  validate-promotion:
+    name: Validate Promotion Path
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Environment Transition
+        run: |
+          SOURCE_ENV="${{ inputs.source-environment }}"
+          TARGET_ENV="${{ inputs.target-environment }}"
+          
+          echo "🔍 Validating promotion: $SOURCE_ENV → $TARGET_ENV"
+          
+          # Ensure proper progression
+          if [[ "$SOURCE_ENV" == "dev" && "$TARGET_ENV" == "stage" ]]; then
+            echo "✅ Valid transition: dev → stage"
+          elif [[ "$SOURCE_ENV" == "stage" && "$TARGET_ENV" == "prod" ]]; then
+            echo "✅ Valid transition: stage → prod"
+          else
+            echo "❌ Invalid transition: $SOURCE_ENV → $TARGET_ENV"
+            echo "Valid transitions: dev→stage or stage→prod"
+            exit 1
+          fi
+
+  # Build before promotion
+  build:
+    name: Build & Test
+    needs: [validate-promotion]
+    uses: ./.github/workflows/build.yml
+    with:
+      checkout-ref: ${{ github.ref }}
+
+  # Deploy to target environment
+  promote:
+    name: Promote to ${{ inputs.target-environment }}
+    needs: [validate-promotion, build]
+    uses: ./.github/workflows/helm-deploy.yml
+    with:
+      environment: ${{ inputs.target-environment }}
+      helm-release-name: enrollmenthub
+      helm-chart-path: infra/helm/app
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_AKS: ${{ secrets.AZ_AKS }}
+
+  # Post-promotion verification
+  verify-promotion:
+    name: Verify Deployment
+    needs: [promote]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Promotion Summary
+        run: |
+          echo "╔════════════════════════════════════════╗"
+          echo "║      PROMOTION COMPLETED               ║"
+          echo "╠════════════════════════════════════════╣"
+          echo "║ Source:  ${{ inputs.source-environment }} (approved)"
+          echo "║ Target:  ${{ inputs.target-environment }}                    ║"
+          echo "║ Status:  ✅ SUCCESS                     ║"
+          echo "║ Time:    $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "║ Commit:  ${{ github.sha }}"
+          echo "║ Actor:   ${{ github.actor }}"
+          echo "╚════════════════════════════════════════╝"

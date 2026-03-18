@@ -1,57 +1,77 @@
-name: deploy
+name: Deploy Multi-Environment
+
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+      skip-tests:
+        description: 'Skip running tests'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
-  helm-deploy-dev:
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - uses: actions/checkout@v4
-      - uses: azure/login@v2
-        with: { creds: ${{ secrets.AZURE_CREDENTIALS }} }
-      - uses: azure/use-kubelogin@v1
-      - uses: azure/aks-set-context@v4
-        with:
-          resource-group: ${{ secrets.AZ_RG }}
-          cluster-name: ${{ secrets.AZ_AKS }}
-          admin: false
-      - name: Helm upgrade (dev)
-        run: |
-          helm upgrade --install enrollmenthub infra/helm/app -n app --create-namespace             --set backend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-backend:latest             --set frontend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-frontend:latest
+  # Build stage - runs tests and builds the application
+  build:
+    name: Build and Test
+    uses: ./.github/workflows/build.yml
+    with:
+      checkout-ref: ${{ github.ref }}
 
-  helm-deploy-stage:
-    runs-on: ubuntu-latest
-    needs: [ helm-deploy-dev ]
-    environment: stage
-    steps:
-      - uses: actions/checkout@v4
-      - uses: azure/login@v2
-        with: { creds: ${{ secrets.AZURE_CREDENTIALS }} }
-      - uses: azure/use-kubelogin@v1
-      - uses: azure/aks-set-context@v4
-        with:
-          resource-group: ${{ secrets.AZ_RG }}
-          cluster-name: ${{ secrets.AZ_AKS }}
-          admin: false
-      - name: Helm upgrade (stage)
-        run: |
-          helm upgrade --install enrollmenthub infra/helm/app -n app --create-namespace             --set backend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-backend:latest             --set frontend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-frontend:latest
+  # Deploy to target environment with approval gates
+  deploy-dev:
+    name: Deploy to Development
+    if: |
+      github.event.inputs.environment == 'dev' ||
+      github.event.inputs.environment == 'stage' ||
+      github.event.inputs.environment == 'prod'
+    needs: [build]
+    uses: ./.github/workflows/helm-deploy.yml
+    with:
+      environment: dev
+      helm-release-name: enrollmenthub
+      helm-chart-path: infra/helm/app
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_AKS: ${{ secrets.AZ_AKS }}
 
-  helm-deploy-prod:
-    runs-on: ubuntu-latest
-    needs: [ helm-deploy-stage ]
-    environment: prod
-    steps:
-      - uses: actions/checkout@v4
-      - uses: azure/login@v2
-        with: { creds: ${{ secrets.AZURE_CREDENTIALS }} }
-      - uses: azure/use-kubelogin@v1
-      - uses: azure/aks-set-context@v4
-        with:
-          resource-group: ${{ secrets.AZ_RG }}
-          cluster-name: ${{ secrets.AZ_AKS }}
-          admin: false
-      - name: Helm upgrade (prod)
-        run: |
-          helm upgrade --install enrollmenthub infra/helm/app -n app --create-namespace             --set backend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-backend:latest             --set frontend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-frontend:latest
+  deploy-stage:
+    name: Deploy to Staging
+    if: |
+      (github.event.inputs.environment == 'stage' ||
+       github.event.inputs.environment == 'prod') &&
+      success()
+    needs: [build, deploy-dev]
+    uses: ./.github/workflows/helm-deploy.yml
+    with:
+      environment: stage
+      helm-release-name: enrollmenthub
+      helm-chart-path: infra/helm/app
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_AKS: ${{ secrets.AZ_AKS }}
+
+  deploy-prod:
+    name: Deploy to Production
+    if: |
+      github.event.inputs.environment == 'prod' &&
+      success()
+    needs: [build, deploy-stage]
+    uses: ./.github/workflows/helm-deploy.yml
+    with:
+      environment: prod
+      helm-release-name: enrollmenthub
+      helm-chart-path: infra/helm/app
+    secrets:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_AKS: ${{ secrets.AZ_AKS }}

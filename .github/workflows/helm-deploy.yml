@@ -1,0 +1,74 @@
+name: Helm Deploy (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment to deploy (dev, stage, prod)'
+        required: true
+        type: string
+      helm-release-name:
+        description: 'Helm release name'
+        required: true
+        type: string
+      helm-chart-path:
+        description: 'Path to helm chart'
+        required: false
+        type: string
+        default: infra/helm/app
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      AZ_RG:
+        required: true
+      AZ_AKS:
+        required: true
+
+jobs:
+  helm-deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure AKS Context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ secrets.AZ_RG }}
+          cluster-name: ${{ secrets.AZ_AKS }}
+          admin: false
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: latest
+
+      - name: Helm Upgrade Release
+        run: |
+          helm upgrade --install ${{ inputs.helm-release-name }} ${{ inputs.helm-chart-path }} \
+            -n app \
+            --create-namespace \
+            --set backend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-backend:latest \
+            --set frontend.image=ghcr.io/${{ github.repository_owner }}/enrollmenthub-frontend:latest \
+            --wait \
+            --timeout 5m
+
+      - name: Verify Deployment
+        run: |
+          kubectl rollout status deployment/enrollmenthub-backend -n app --timeout=2m
+          kubectl rollout status deployment/enrollmenthub-frontend -n app --timeout=2m
+
+      - name: Deployment Summary
+        run: |
+          echo "=== Deployment Summary ===" 
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Release: ${{ inputs.helm-release-name }}"
+          echo "Timestamp: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          kubectl get deployments -n app
+          kubectl get services -n app

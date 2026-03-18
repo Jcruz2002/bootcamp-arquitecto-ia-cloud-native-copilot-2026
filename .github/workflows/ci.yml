@@ -7,42 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-backend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.x
-
-      - name: Restore backend
-        working-directory: templates/dotnet10-api/src
-        run: dotnet restore
-
-      - name: Build backend
-        working-directory: templates/dotnet10-api/src
-        run: dotnet build -c Release --no-restore
-
-  build-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: npm
-          cache-dependency-path: templates/next16-app/package-lock.json
-
-      - name: Install frontend deps
-        working-directory: templates/next16-app
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: templates/next16-app
-        run: npm run build
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      checkout-ref: ${{ github.ref }}
