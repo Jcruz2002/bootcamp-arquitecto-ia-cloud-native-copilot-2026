@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { DEFAULT_API_BASE, clearSession, consumeFlashMessage, getToken, setFlashMessage } from "../lib/auth";
+import { signOut, useSession } from "next-auth/react";
+import { DEFAULT_API_BASE, consumeFlashMessage, setFlashMessage } from "../lib/auth";
 import Toast from "../components/Toast";
 
 const ENDPOINT = `${DEFAULT_API_BASE}/api/v1/users`;
 
 export default function UsersPage() {
   const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [token, setTokenState] = useState("");
+  const { data: session, status } = useSession();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [editingUser, setEditingUser] = useState(null);
@@ -20,14 +20,21 @@ export default function UsersPage() {
   const [success, setSuccess] = useState("");
   const [toast, setToast] = useState({ message: "", type: "ok" });
 
+  const token = session?.accessToken || "";
+  const roles = session?.roles || [];
+  const isAdmin = roles.includes("admin");
+
   function showToast(message, type = "ok") {
     setToast({ message, type });
   }
 
   useEffect(() => {
-    const sessionToken = getToken();
-    if (!sessionToken) {
+    if (status === "unauthenticated") {
       router.replace("/login");
+      return;
+    }
+
+    if (status !== "authenticated") {
       return;
     }
 
@@ -35,15 +42,7 @@ export default function UsersPage() {
     if (flash?.message) {
       setToast(flash);
     }
-
-    setTokenState(sessionToken);
-    setReady(true);
-  }, [router]);
-
-  function handleUnauthorized() {
-    clearSession();
-    router.replace("/login");
-  }
+  }, [router, status]);
 
   async function loadUsers(sessionToken) {
     setLoadingUsers(true);
@@ -54,7 +53,10 @@ export default function UsersPage() {
         headers: { Authorization: `Bearer ${sessionToken}` },
       });
 
-      if (response.status === 401) { handleUnauthorized(); return; }
+      if (response.status === 401) {
+        await signOut({ callbackUrl: "/login" });
+        return;
+      }
       if (!response.ok) throw new Error(`Error al listar usuarios (${response.status})`);
 
       const data = await response.json();
@@ -83,7 +85,10 @@ export default function UsersPage() {
         body: JSON.stringify({ name, email }),
       });
 
-      if (response.status === 401) { handleUnauthorized(); return; }
+      if (response.status === 401) {
+        await signOut({ callbackUrl: "/login" });
+        return;
+      }
 
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
@@ -105,6 +110,11 @@ export default function UsersPage() {
   }
 
   async function onDelete(user) {
+    if (!isAdmin) {
+      setError("Solo el rol admin puede eliminar usuarios.");
+      return;
+    }
+
     if (!confirm(`¿Eliminar a "${user.name}"?`)) return;
     setDeletingId(user.id);
     setError("");
@@ -116,7 +126,10 @@ export default function UsersPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (response.status === 401) { handleUnauthorized(); return; }
+      if (response.status === 401) {
+        await signOut({ callbackUrl: "/login" });
+        return;
+      }
       if (!response.ok) throw new Error(`No se pudo eliminar (${response.status})`);
 
       const msg = `Usuario "${user.name}" eliminado correctamente`;
@@ -147,18 +160,17 @@ export default function UsersPage() {
     setError("");
   }
 
-  function onLogout() {
-    clearSession();
+  async function onLogout() {
     setFlashMessage("Sesión cerrada correctamente", "ok");
-    router.push("/login");
+    await signOut({ callbackUrl: "/login" });
   }
 
   useEffect(() => {
-    if (!ready || !token) return;
+    if (status !== "authenticated" || !token) return;
     loadUsers(token);
-  }, [ready, token]);
+  }, [status, token]);
 
-  if (!ready) {
+  if (status !== "authenticated") {
     return (
       <main>
         <section className="container">
@@ -178,8 +190,8 @@ export default function UsersPage() {
       <section className="container">
         <header className="header header-with-actions">
           <div>
-            <h1>Lab 05 - Gestión de usuarios</h1>
-            <p>CRUD completo con JWT del Lab 03.</p>
+            <h1>Lab 15 - Gestión de usuarios</h1>
+            <p>Acceso OIDC con NextAuth. Usuario: {session?.user?.name || "-"}</p>
           </div>
           <button onClick={onLogout}>Cerrar sesión</button>
         </header>
@@ -188,6 +200,7 @@ export default function UsersPage() {
         <div className="grid">
           <aside className="panel">
             <h2>{isEdit ? `Editando: ${editingUser.name}` : "Nuevo usuario"}</h2>
+            <p className="helper">Roles: {roles.length ? roles.join(", ") : "sin roles"}</p>
             <form onSubmit={onSubmit}>
               <label htmlFor="name">Nombre</label>
               <input
@@ -256,7 +269,7 @@ export default function UsersPage() {
                       <button
                         className="btn-danger"
                         onClick={() => onDelete(user)}
-                        disabled={deletingId === user.id}
+                        disabled={deletingId === user.id || !isAdmin}
                       >
                         {deletingId === user.id ? "..." : "Eliminar"}
                       </button>

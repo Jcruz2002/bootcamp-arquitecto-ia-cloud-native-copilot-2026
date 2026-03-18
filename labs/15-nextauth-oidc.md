@@ -14,6 +14,13 @@ Integrar autenticación OIDC en Next y propagar claims útiles.
 4. Implementa logout y renovación de sesión.
 5. Valida acceso por rol en frontend.
 
+## Comandos sugeridos
+```bash
+git checkout -b lab-15
+git commit -m "lab15:  NextAuth con OIDC"
+git push origin lab-15
+```
+
 ## Validación
 - Inicio de sesión y cierre correctos.
 - Sesión contiene claims requeridos.

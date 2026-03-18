@@ -90,3 +90,11 @@
 - Cambio controlado de modelo: columna `last_login_at` en `users`.
 - Segunda revisión creada y aplicada: `331003611bd6_add_last_login_at.py`.
 - Estado final validado en DB: `alembic_version = 331003611bd6` y columna `last_login_at` existente (`timestamp with time zone`, nullable).
+
+## Registro Lab 15
+- Evidencia: `labs/evidencias/lab-15-nextauth-oidc/lab-15-nextauth-oidc.md`.
+- Propósito: integrar autenticación OIDC con NextAuth, exponer claims/roles en sesión y proteger rutas frontend.
+- Integración NextAuth: proveedor OIDC Keycloak + endpoint `api/auth/[...nextauth]`.
+- Claims en sesión: `accessToken`, `roles`, `claims` útiles para UI.
+- Protección de rutas: `/users` autenticada y `/admin` restringida por rol `admin` mediante `proxy.js`.
+- Login/logout: `signIn/signOut` de NextAuth y verificación de endpoints `/api/auth/session` y `/api/auth/providers`.
