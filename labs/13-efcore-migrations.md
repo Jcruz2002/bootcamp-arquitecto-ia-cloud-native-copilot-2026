@@ -8,10 +8,10 @@ Gestionar evolutivo de esquema y datos semilla en .NET.
 
 ## Paso a paso
 1. Define modelos iniciales.
-2. Genera migración base.
+2. Genera migraciï¿½n base.
 3. Aplica base de datos.
 4. Implementa seed idempotente.
-5. Crea segunda migración con cambio controlado.
+5. Crea segunda migraciï¿½n con cambio controlado.
 
 ## Comandos sugeridos
 ```bash
@@ -20,13 +20,16 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 dotnet ef migrations add AddEnrollmentStatus
 dotnet ef database update
+git checkout -b lab-13
+git commit -m "lab13: EF Core migrations y seed"
+git push origin lab-13
 ```
 
-## Validación
+## Validaciï¿½n
 - Historial de migraciones consistente.
 - Seed aplicado sin duplicados.
 
-## Rúbrica
+## Rï¿½brica
 - 50% migraciones.
 - 30% calidad de seed.
 - 20% evidencia.

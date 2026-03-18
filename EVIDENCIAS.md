@@ -72,3 +72,12 @@
 - Mejora con indices: Query A `0.700 ms`, Query B `1.510 ms`.
 - Cache Redis (lectura frecuente): warm avg `0.011319 s` vs no-cache avg `0.019575 s`.
 - Conclusiones y trade-offs documentados (latencia vs costo de escritura/cache consistency).
+
+## Registro Lab 13
+- Evidencia: `labs/evidencias/lab-13-efcore-migrations/lab-13-efcore-migrations.md`.
+- API base utilizada: `templates/dotnet10-api/src` (Lab 03).
+- Migración base existente: `InitialCreate`.
+- Seed idempotente implementado por email en `Application/Seed.cs` (sin duplicados).
+- Segunda migración aplicada: `AddLastLoginAt` (campo `LastLoginAt` nullable en `Users`).
+- Historial migraciones validado: `InitialCreate` + `AddLastLoginAt` en `__EFMigrationsHistory`.
+- Nota técnica: migración ajustada con `IF NOT EXISTS` para compatibilidad con índices ya creados en Lab 12.

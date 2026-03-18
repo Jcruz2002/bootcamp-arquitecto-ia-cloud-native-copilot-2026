@@ -44,6 +44,10 @@ public sealed class AppDb : DbContext
                 .IsRequired()
                 .HasDefaultValueSql("NOW()");
 
+            entity.Property(e => e.LastLoginAt)
+                .HasColumnType("timestamp with time zone")
+                .IsRequired(false);
+
             // Índice único para email
             entity.HasIndex(e => e.Email).IsUnique();
 

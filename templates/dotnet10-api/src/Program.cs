@@ -46,6 +46,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Aplicar migraciones y seed idempotente al iniciar.
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDb>();
+    await db.Database.MigrateAsync();
+    await Seed.InitAsync(db);
+}
+
 // Configurar middleware
 if (app.Environment.IsDevelopment())
 {

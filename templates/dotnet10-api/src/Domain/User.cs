@@ -25,6 +25,7 @@ public sealed class User
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Status { get; set; } = "active";
+    public DateTime? LastLoginAt { get; set; }
     public DateTime CreatedAt { get; init; }
     public DateTime UpdatedAt { get; set; }
 }
