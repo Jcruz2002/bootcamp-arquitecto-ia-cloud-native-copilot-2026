@@ -81,3 +81,12 @@
 - Segunda migración aplicada: `AddLastLoginAt` (campo `LastLoginAt` nullable en `Users`).
 - Historial migraciones validado: `InitialCreate` + `AddLastLoginAt` en `__EFMigrationsHistory`.
 - Nota técnica: migración ajustada con `IF NOT EXISTS` para compatibilidad con índices ya creados en Lab 12.
+
+## Registro Lab 14
+- Evidencia: `labs/evidencias/lab-14-alembic-fastapi/lab-14-alembic-fastapi.md`.
+- Propósito: versionar y aplicar cambios de esquema en FastAPI con Alembic de forma reproducible entre entornos.
+- Configuración Alembic completada: `alembic.ini`, `env.py`, `script.py.mako`.
+- Revisión inicial creada y aplicada: `484c69d43034_init.py`.
+- Cambio controlado de modelo: columna `last_login_at` en `users`.
+- Segunda revisión creada y aplicada: `331003611bd6_add_last_login_at.py`.
+- Estado final validado en DB: `alembic_version = 331003611bd6` y columna `last_login_at` existente (`timestamp with time zone`, nullable).

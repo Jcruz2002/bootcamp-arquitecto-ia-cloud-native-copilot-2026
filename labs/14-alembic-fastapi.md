@@ -8,24 +8,27 @@ Versionar cambios de base de datos en stack Python.
 
 ## Paso a paso
 1. Configura `alembic.ini` y `env.py`.
-2. Crea revisión inicial.
+2. Crea revisiï¿½n inicial.
 3. Aplica upgrade.
 4. Introduce un cambio de modelo.
-5. Genera nueva revisión y valida datos.
+5. Genera nueva revisiï¿½n y valida datos.
 
 ## Comandos sugeridos
 ```bash
 cd templates/fastapi
-alembic revisión -m "init"
+alembic revisiï¿½n -m "init"
 alembic upgrade head
-alembic revisión --autogenerate -m "add_status"
+alembic revisiï¿½n --autogenerate -m "add_status"
 alembic upgrade head
+git checkout -b lab-14
+git commit -m "lab14: Flujo  Alembic para FastAPI"
+git push origin lab-14
 ```
 
-## Validación
+## Validaciï¿½n
 - Versionado reproducible en diferentes entornos.
 
-## Rúbrica
+## Rï¿½brica
 - 50% flujo de migraciones.
 - 30% consistencia de esquema.
 - 20% evidencia.

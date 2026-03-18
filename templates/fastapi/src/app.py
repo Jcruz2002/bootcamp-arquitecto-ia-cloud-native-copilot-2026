@@ -6,6 +6,11 @@ from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
+from sqlalchemy import desc, select
+from sqlalchemy.orm import Session
+
+from src.database import SessionLocal
+from src.models import User
 
 
 class ErrorResponse(BaseModel):
@@ -40,8 +45,13 @@ app = FastAPI(
     description="Servicio productivo basico para CRUD de usuarios.",
 )
 
-# Repositorio en memoria para el lab.
-users_db: dict[UUID, UserOut] = {}
+
+def get_session() -> Session:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 @app.exception_handler(RequestValidationError)
@@ -66,8 +76,22 @@ def list_users(skip: int = 0, limit: int = 10) -> list[UserOut]:
     if skip < 0 or limit <= 0:
         raise HTTPException(status_code=400, detail="skip y limit deben ser validos")
 
-    ordered = sorted(users_db.values(), key=lambda u: u.created_at, reverse=True)
-    return ordered[skip : skip + limit]
+    with SessionLocal() as db:
+        rows = db.execute(
+            select(User).order_by(desc(User.created_at)).offset(skip).limit(limit)
+        ).scalars().all()
+
+    return [
+        UserOut(
+            id=row.id,
+            name=row.name,
+            email=row.email,
+            status=row.status,
+            created_at=row.created_at,
+            updated_at=row.updated_at,
+        )
+        for row in rows
+    ]
 
 
 @app.get(
@@ -76,10 +100,19 @@ def list_users(skip: int = 0, limit: int = 10) -> list[UserOut]:
     responses={404: {"model": ErrorResponse}},
 )
 def get_user(user_id: UUID) -> UserOut:
-    user = users_db.get(user_id)
-    if not user:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return user
+    with SessionLocal() as db:
+        user = db.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+        return UserOut(
+            id=user.id,
+            name=user.name,
+            email=user.email,
+            status=user.status,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+        )
 
 
 @app.post(
@@ -89,20 +122,32 @@ def get_user(user_id: UUID) -> UserOut:
     responses={409: {"model": ErrorResponse}},
 )
 def create_user(payload: UserCreate) -> UserOut:
-    if any(u.email == payload.email for u in users_db.values()):
-        raise HTTPException(status_code=409, detail="Email ya existe")
-
     now = datetime.now(timezone.utc)
-    user = UserOut(
-        id=uuid4(),
-        name=payload.name,
-        email=payload.email,
-        status=payload.status,
-        created_at=now,
-        updated_at=now,
-    )
-    users_db[user.id] = user
-    return user
+    with SessionLocal() as db:
+        exists = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
+        if exists:
+            raise HTTPException(status_code=409, detail="Email ya existe")
+
+        user = User(
+            id=uuid4(),
+            name=payload.name,
+            email=payload.email,
+            status=payload.status,
+            created_at=now,
+            updated_at=now,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        return UserOut(
+            id=user.id,
+            name=user.name,
+            email=user.email,
+            status=user.status,
+            created_at=user.created_at,
+            updated_at=user.updated_at,
+        )
 
 
 @app.put(
@@ -111,25 +156,33 @@ def create_user(payload: UserCreate) -> UserOut:
     responses={404: {"model": ErrorResponse}, 409: {"model": ErrorResponse}},
 )
 def update_user(user_id: UUID, payload: UserUpdate) -> UserOut:
-    current = users_db.get(user_id)
-    if not current:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    with SessionLocal() as db:
+        current = db.get(User, user_id)
+        if not current:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    if payload.email and any(
-        u.email == payload.email and u.id != user_id for u in users_db.values()
-    ):
-        raise HTTPException(status_code=409, detail="Email ya existe")
+        if payload.email and payload.email != current.email:
+            exists = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
+            if exists:
+                raise HTTPException(status_code=409, detail="Email ya existe")
 
-    updated = current.model_copy(
-        update={
-            "name": payload.name if payload.name is not None else current.name,
-            "email": payload.email if payload.email is not None else current.email,
-            "status": payload.status if payload.status is not None else current.status,
-            "updated_at": datetime.now(timezone.utc),
-        }
-    )
-    users_db[user_id] = updated
-    return updated
+        current.name = payload.name if payload.name is not None else current.name
+        current.email = payload.email if payload.email is not None else current.email
+        current.status = payload.status if payload.status is not None else current.status
+        current.updated_at = datetime.now(timezone.utc)
+
+        db.add(current)
+        db.commit()
+        db.refresh(current)
+
+        return UserOut(
+            id=current.id,
+            name=current.name,
+            email=current.email,
+            status=current.status,
+            created_at=current.created_at,
+            updated_at=current.updated_at,
+        )
 
 
 @app.delete(
@@ -138,6 +191,10 @@ def update_user(user_id: UUID, payload: UserUpdate) -> UserOut:
     responses={404: {"model": ErrorResponse}},
 )
 def delete_user(user_id: UUID) -> None:
-    if user_id not in users_db:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    del users_db[user_id]
+    with SessionLocal() as db:
+        current = db.get(User, user_id)
+        if not current:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+        db.delete(current)
+        db.commit()

@@ -21,7 +21,7 @@ dotnet ef database update
 dotnet ef migrations add AddEnrollmentStatus
 dotnet ef database update
 git checkout -b lab-13
-git commit -m "lab13: EF Core migrations y seed"
+git commit -m "lab13: Flujo EF Core migrations y seed"
 git push origin lab-13
 ```
 
