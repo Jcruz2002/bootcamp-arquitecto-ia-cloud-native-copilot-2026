@@ -128,6 +128,14 @@ docker run -d --name keycloak -p 8080:8080 \
 3. Ejecuta login con Keycloak.
 4. Comprueba que backend aplica la misma política para los tres.
 
+## Comandos sugeridos
+```bash
+git checkout -b lab-18
+git commit -m "lab18: SSO con OIDC en Entra ID, Google y Keycloak"
+git push origin lab-18
+```
+
+
 ## Evidencias obligatorias
 - Captura de configuración IdP por proveedor
 - Captura de token/claims (enmascarando datos sensibles)
@@ -139,6 +147,13 @@ docker run -d --name keycloak -p 8080:8080 \
 - 35% autorización por roles/políticas
 - 20% seguridad de configuración
 - 10% evidencias y documentación
+
+## Comandos sugeridos
+```bash
+git checkout -b lab-18
+git commit -m "lab18: SSO OIDC multi proveedor (Entra, Google, Keycloak)"
+git push origin lab-18
+```
 
 ## Errores comunes
 1. `invalid_redirect_uri`:

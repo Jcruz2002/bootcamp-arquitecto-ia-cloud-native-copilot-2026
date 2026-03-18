@@ -19,6 +19,7 @@ Administrar despliegues declarativos sincronizados desde Git.
 git checkout -b lab-10
 git commit -m "lab10: Kubernetes 1.35 y Helm"
 git push origin lab-1o
+```
 
 ## Validaci�n
 - Argo CD refleja estado real del cluster.

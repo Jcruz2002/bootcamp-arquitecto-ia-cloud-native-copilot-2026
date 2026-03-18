@@ -18,6 +18,7 @@ Evaluar y mejorar rendimiento con volumen de datos realista.
 git checkout -b lab-12
 git commit -m "lab12: Flujo Data at Scale y optimizacion"
 git push origin lab-12
+```
 
 ## Validaci�n
 - Existe comparativa antes y despu�s.

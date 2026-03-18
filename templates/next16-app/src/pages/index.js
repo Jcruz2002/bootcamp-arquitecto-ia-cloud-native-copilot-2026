@@ -20,7 +20,7 @@ export default function Home() {
     <main>
       <section className="container">
         <header className="header">
-          <h1>Lab 15 - NextAuth con OIDC</h1>
+          <h1>Lab 18 - SSO OIDC multi proveedor</h1>
           <p>Redirigiendo...</p>
         </header>
       </section>

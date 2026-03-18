@@ -87,6 +87,16 @@ main {
   margin: 0 auto;
 }
 
+.auth-provider-buttons {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.auth-provider-buttons button {
+  width: 100%;
+}
+
 label {
   display: block;
   font-size: 0.9rem;

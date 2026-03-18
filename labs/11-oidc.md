@@ -18,6 +18,7 @@ Implementar autenticaci�n federada y autorizaci�n por roles en un proveedor 
 git checkout -b lab-11
 git commit -m "lab11: Flujo OIDC base (Entra, Google o Keycloak)"
 git push origin lab-11
+```
 
 ## Validaci�n
 - Login exitoso y sesi�n estable.

@@ -22,6 +22,7 @@ kubectl get svc -n app
 git checkout -b lab-09
 git commit -m "lab09: Kubernetes 1.35 y Helm"
 git push origin lab-09
+```
 
 ## Extensi�n opcional - API Gateway con Kong + Konga
 

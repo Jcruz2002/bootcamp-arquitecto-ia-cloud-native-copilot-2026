@@ -18,6 +18,7 @@ Automatizar build, pruebas y publicacion de imagenes.
 git checkout -b lab-08
 git commit -m "lab08: GitHub Actions CI/CD"
 git push origin lab-08
+```
 
 ## Validaci�n
 - CI en verde en PR.

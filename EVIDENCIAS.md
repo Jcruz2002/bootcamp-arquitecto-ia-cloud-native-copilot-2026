@@ -123,3 +123,27 @@
   - Protecciones: status checks, branches up-to-date, reviewers requeridos.
 - **Reutilización Lograda**: 2 workflows reutilizables usados en 5+ lugares, reducción 111→270 líneas con DRY principle.
 - **Documentación**: diagrama ASCII de flujo + checklist de validación + instrucciones de configuración en `diagrama-flujo.md`.
+
+## Registro Lab 18
+- Evidencia: `labs/evidencias/lab-18-sso-oidc-entra-google-keycloak/lab-18-sso-oidc-entra-google-keycloak.md`.
+- Propósito: habilitar SSO multi proveedor OIDC (Entra, Google y Keycloak) en una sola aplicación.
+- Frontend NextAuth:
+  - Configuración multi provider en `templates/next16-app/src/lib/nextauth.js`.
+  - Login con selector de proveedor en `templates/next16-app/src/pages/login.js`.
+  - Variables por proveedor en `.env.example` y `.env.local.example`.
+  - UX ajustada: estado de carga por botón en login (evita doble "Redirigiendo...").
+- Backend .NET:
+  - Validación multi issuer con `PolicyScheme` y tres esquemas JwtBearer en `templates/dotnet10-api/src/AuthExtensions.cs`.
+  - Configuración por proveedor en `templates/dotnet10-api/src/appsettings.json` y `appsettings.Development.json`.
+- Autorización por políticas:
+  - `IsAdmin` e `IsUser` funcionando con claims heterogéneos (`roles`, `role`, `realm_access.roles`, arrays/json/csv).
+- Validación técnica:
+  - `dotnet build` OK en API.
+  - `npm run build` OK en Next.
+- Estado funcional actual:
+  - Entra ID operativo con app registration real, consentimiento y login exitoso.
+  - Keycloak operativo.
+  - Google pendiente de credenciales para cierre completo de los 3 tracks.
+- Evidencia manual pendiente:
+  - Capturas de configuración IdP y claims enmascarados.
+  - Capturas de pruebas 401/403/200 por proveedor.
