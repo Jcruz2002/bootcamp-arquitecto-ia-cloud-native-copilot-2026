@@ -13,6 +13,13 @@ Obtener visibilidad operativa de la aplicación mediante métricas y dashboards.
 4. Crea dashboard base en Grafana.
 5. Ejecuta carga y observa comportamiento.
 
+## Comandos sugeridos
+```bash
+git checkout -b lab-16
+git commit -m "lab16:  Observabilidad con Prometheus y Grafana"
+git push origin lab-16
+```
+
 ## Validación
 - Métricas visibles en Prometheus.
 - Dashboard de Grafana con datos reales.

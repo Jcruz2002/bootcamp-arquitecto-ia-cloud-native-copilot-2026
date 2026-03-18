@@ -98,3 +98,11 @@
 - Claims en sesión: `accessToken`, `roles`, `claims` útiles para UI.
 - Protección de rutas: `/users` autenticada y `/admin` restringida por rol `admin` mediante `proxy.js`.
 - Login/logout: `signIn/signOut` de NextAuth y verificación de endpoints `/api/auth/session` y `/api/auth/providers`.
+
+## Registro Lab 16
+- Evidencia: `labs/evidencias/lab-16-observabilidad/lab-16-observabilidad.md`.
+- Propósito: obtener visibilidad operativa con métricas y dashboards para la API.
+- Instrumentación backend: `prometheus-net.AspNetCore`, middleware `UseHttpMetrics`, endpoint `/metrics`.
+- Stack observabilidad: `observabilidad/prometheus-grafana/docker-compose.yml` (Prometheus + Grafana).
+- Scrape target validado: job `api-dotnet` contra `host.docker.internal:8080/metrics` en estado `up`.
+- Dashboard provisionado y validado: `Bootcamp API Overview` (`uid=bootcamp-api-overview`) con datos reales.
