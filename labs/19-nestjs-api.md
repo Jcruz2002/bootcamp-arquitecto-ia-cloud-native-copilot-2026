@@ -9,6 +9,15 @@ Construir una API RESTful con NestJS, TypeORM, autenticación JWT y pruebas auto
 - PostgreSQL disponible (Docker Compose del stack o instancia existente).
 - Docker instalado para contenerización final.
 
+## Comandos sugeridos
+```bash
+git checkout -b lab-19
+git commit -m "lab19: NestJS API con TypeScript y PostgreSQL"
+git push origin lab-9
+```
+
+
+
 ## Paso a paso
 
 ### 1. Instalar CLI y crear proyecto
@@ -112,6 +121,14 @@ CMD ["node", "dist/main"]
 ```bash
 docker build -t nestjs-api:local .
 docker run -p 3000:3000 --env-file .env nestjs-api:local
+```
+
+
+## Comandos sugeridos
+```bash
+git checkout -b lab-19
+git commit -m "lab19: NestJS API con TypeScript y PostgreSQL"
+git push origin lab-19
 ```
 
 ## Variables de entorno requeridas

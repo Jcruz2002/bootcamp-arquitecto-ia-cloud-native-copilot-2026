@@ -147,3 +147,18 @@
 - Evidencia manual pendiente:
   - Capturas de configuración IdP y claims enmascarados.
   - Capturas de pruebas 401/403/200 por proveedor.
+
+## Registro Lab 19
+- Evidencia: `labs/evidencias/lab-19-nestjs-api/lab-19-nestjs-api.md`.
+- Propósito: construir API REST con NestJS, TypeORM, JWT, validación y pruebas automatizadas.
+- Implementación técnica:
+  - Módulo `users` con CRUD completo, paginación y DTOs validados.
+  - Módulo `auth` con login JWT (`/auth/login`) y rutas protegidas (`/auth/profile`, `/auth/admin`).
+  - Persistencia con TypeORM y entidad `User` (`email` único, `roles`, `passwordHash`).
+  - Swagger habilitado en `/api`.
+- Validación:
+  - `npm run build` OK.
+  - `npm run test` OK.
+  - `npm run test:cov` OK.
+  - `npm run test:e2e` OK (6 pruebas en verde).
+  - Docker: imagen `nestjs-api:local` construida y contenedor validado con `GET /health` = 200.
