@@ -11,6 +11,8 @@ from sqlalchemy.orm import Session
 
 from src.agent.graph import run_agent
 from src.database import SessionLocal
+from src.messaging.azure_queue import enqueue_azure_queue_job
+from src.messaging.redis_streams import enqueue_redis_job
 from src.models import User
 
 
@@ -48,6 +50,27 @@ class AgentQueryResponse(BaseModel):
     response: str
     node_trace: list[str]
     mode: Literal["llm", "fallback"]
+
+
+class JobPayload(BaseModel):
+    user_id: int = Field(gt=0)
+    template: str = Field(default="welcome", min_length=3, max_length=100)
+    fail_once: bool = False
+
+
+class JobEnqueueRequest(BaseModel):
+    backend: Literal["redis", "azure_queue"] = "redis"
+    type: Literal["send_welcome_email"] = "send_welcome_email"
+    correlation_id: str = Field(min_length=6, max_length=80)
+    payload: JobPayload
+
+
+class JobEnqueueResponse(BaseModel):
+    status: Literal["accepted"]
+    backend: Literal["redis", "azure_queue"]
+    queue_message_id: str
+    job_id: str
+    correlation_id: str
 
 
 app = FastAPI(
@@ -93,6 +116,38 @@ async def query_agent(payload: AgentQueryRequest) -> AgentQueryResponse:
         return AgentQueryResponse(**result)
     except ValueError as ex:
         raise HTTPException(status_code=400, detail=str(ex)) from ex
+
+
+@app.post(
+    "/api/v1/jobs/email",
+    response_model=JobEnqueueResponse,
+    status_code=status.HTTP_202_ACCEPTED,
+    responses={400: {"model": ErrorResponse}},
+)
+async def enqueue_email_job(payload: JobEnqueueRequest) -> JobEnqueueResponse:
+    job_id = str(uuid4())
+    job = {
+        "jobId": job_id,
+        "correlationId": payload.correlation_id,
+        "type": payload.type,
+        "payload": payload.payload.model_dump(),
+    }
+
+    try:
+        if payload.backend == "redis":
+            message_id = await enqueue_redis_job(job)
+        else:
+            message_id = await enqueue_azure_queue_job(job)
+    except ValueError as ex:
+        raise HTTPException(status_code=400, detail=str(ex)) from ex
+
+    return JobEnqueueResponse(
+        status="accepted",
+        backend=payload.backend,
+        queue_message_id=message_id,
+        job_id=job_id,
+        correlation_id=payload.correlation_id,
+    )
 
 
 @app.get("/api/v1/users", response_model=list[UserOut])
