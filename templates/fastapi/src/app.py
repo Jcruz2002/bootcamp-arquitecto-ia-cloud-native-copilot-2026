@@ -9,6 +9,7 @@ from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import desc, select
 from sqlalchemy.orm import Session
 
+from src.agent.graph import run_agent
 from src.database import SessionLocal
 from src.models import User
 
@@ -37,6 +38,16 @@ class UserOut(BaseModel):
     status: Literal["active", "inactive"]
     created_at: datetime
     updated_at: datetime
+
+
+class AgentQueryRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=1000)
+
+
+class AgentQueryResponse(BaseModel):
+    response: str
+    node_trace: list[str]
+    mode: Literal["llm", "fallback"]
 
 
 app = FastAPI(
@@ -69,6 +80,19 @@ async def validation_exception_handler(
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.post(
+    "/api/v1/agent/query",
+    response_model=AgentQueryResponse,
+    responses={400: {"model": ErrorResponse}},
+)
+async def query_agent(payload: AgentQueryRequest) -> AgentQueryResponse:
+    try:
+        result = await run_agent(payload.prompt)
+        return AgentQueryResponse(**result)
+    except ValueError as ex:
+        raise HTTPException(status_code=400, detail=str(ex)) from ex
 
 
 @app.get("/api/v1/users", response_model=list[UserOut])
