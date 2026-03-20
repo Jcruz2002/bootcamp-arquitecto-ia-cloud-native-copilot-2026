@@ -1,0 +1,26 @@
+<policies>
+  <inbound>
+    <base />
+    <set-header name="x-correlation-id" exists-action="override">
+      <value>@(context.RequestId.ToString())</value>
+    </set-header>
+    <validate-jwt header-name="Authorization"
+                  failed-validation-httpcode="401"
+                  failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+      <openid-config url="https://login.microsoftonline.com/e2bf1c48-1dae-47ba-9808-67da61e2588d/v2.0/.well-known/openid-configuration" />
+      <audiences>
+        <audience>4e5a4ee5-b684-471f-afdf-fdb8a968eacf</audience>
+      </audiences>
+    </validate-jwt>
+    <rate-limit calls="30" renewal-period="60" />
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>
