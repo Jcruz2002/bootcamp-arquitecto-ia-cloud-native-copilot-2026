@@ -13,6 +13,7 @@ from src.agent.graph import run_agent
 from src.database import SessionLocal
 from src.messaging.azure_queue import enqueue_azure_queue_job
 from src.messaging.redis_streams import enqueue_redis_job
+from src.messaging.kafka_producer import enqueue_kafka_order
 from src.models import User
 
 
@@ -71,6 +72,26 @@ class JobEnqueueResponse(BaseModel):
     queue_message_id: str
     job_id: str
     correlation_id: str
+
+
+class OrderData(BaseModel):
+    customer_id: str = Field(min_length=3, max_length=50)
+    product: str = Field(min_length=3, max_length=100)
+    quantity: int = Field(gt=0, le=1000)
+    price: float = Field(gt=0)
+
+
+class OrderCreateRequest(BaseModel):
+    data: OrderData
+    correlation_id: str = Field(min_length=6, max_length=80)
+
+
+class OrderCreateResponse(BaseModel):
+    status: Literal["published"]
+    event_id: str
+    order_id: str
+    correlation_id: str
+    topic: str
 
 
 app = FastAPI(
@@ -148,6 +169,26 @@ async def enqueue_email_job(payload: JobEnqueueRequest) -> JobEnqueueResponse:
         job_id=job_id,
         correlation_id=payload.correlation_id,
     )
+
+
+@app.post(
+    "/api/v1/orders/create",
+    response_model=OrderCreateResponse,
+    status_code=status.HTTP_202_ACCEPTED,
+    responses={400: {"model": ErrorResponse}},
+)
+async def create_order(payload: OrderCreateRequest) -> OrderCreateResponse:
+    try:
+        result = await enqueue_kafka_order(
+            order_data=payload.data.model_dump(),
+            correlation_id=payload.correlation_id,
+            bootstrap_servers="localhost:9092",
+        )
+        return OrderCreateResponse(**result)
+    except RuntimeError as ex:
+        raise HTTPException(status_code=503, detail=str(ex)) from ex
+    except ValueError as ex:
+        raise HTTPException(status_code=400, detail=str(ex)) from ex
 
 
 @app.get("/api/v1/users", response_model=list[UserOut])

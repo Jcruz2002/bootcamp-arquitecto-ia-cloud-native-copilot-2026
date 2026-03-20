@@ -14,3 +14,4 @@ langchain-community>=0.3.19
 python-dotenv>=1.0.1
 redis>=5.0.8
 azure-storage-queue>=12.11.0
+confluent-kafka>=2.3.0
