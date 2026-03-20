@@ -178,3 +178,50 @@
   - `POST /api/v1/agent/report` = 200 con reporte generado.
   - Logs con invocación de tools (`get_active_users`, `summarize_users`, `format_report`).
   - Verificación de seguridad (`git grep`) sin claves hardcodeadas.
+
+## Registro Lab 21
+- Evidencia: `labs/evidencias/lab-21-ai-agents-langgraph/lab-21-ai-agents-langgraph.md`.
+- Propósito: construir un agente con LangGraph (Python/FastAPI) con estado explícito, tool calling y endpoint HTTP.
+- Implementación técnica:
+  - Módulo de agente en `templates/fastapi/src/agent/` con `tools.py` y `graph.py`.
+  - Grafo con nodos `call_llm` y `run_tools`, arista condicional y loop (`run_tools -> call_llm`).
+  - Tools reales contra base de datos: `get_active_users` y `get_user_count`.
+  - Endpoint `POST /api/v1/agent/query` integrado en `templates/fastapi/src/app.py`.
+  - Sanitización de prompt y traza de nodos (`node_trace`) para observabilidad.
+- Validación:
+  - `POST /api/v1/agent/query` = 200 con respuesta del agente.
+  - Recorrido de nodos evidenciado: `call_llm -> run_tools -> call_llm`.
+  - Prueba de entrada inválida (`prompt` vacío) retorna `422`.
+  - Sin claves hardcodeadas; uso de variables de entorno para LLM.
+
+## Registro Lab 24
+- Evidencia: `labs/evidencias/lab-24-mensajeria-redis-azure-queue/lab-24-mensajeria-redis-azure-queue.md`.
+- Propósito: implementar mensajería asíncrona productor/consumidor con Redis Streams y Azure Queue.
+- Implementación técnica:
+  - Endpoint productor en FastAPI: `POST /api/v1/jobs/email` (`202 Accepted`).
+  - Productor Redis: `templates/fastapi/src/messaging/redis_streams.py`.
+  - Worker Redis con consumer group, `XACK`, reintento e idempotencia: `templates/fastapi/src/messaging/redis_worker.py`.
+  - Productor Azure Queue: `templates/fastapi/src/messaging/azure_queue.py`.
+  - Worker Azure Queue: `templates/fastapi/src/messaging/azure_queue_worker.py`.
+- Validación:
+  - Publicación de jobs Redis con respuesta `accepted` y trazabilidad (`job_id`, `correlation_id`).
+  - Reintento validado con `fail_once=true`.
+  - Idempotencia validada con `idempotent_skip` para `jobId` duplicado.
+  - Azure Queue sin credenciales devuelve `400` controlado (`AZURE_STORAGE_CONNECTION_STRING no configurada`).
+
+## Registro Lab 25
+- Evidencia: `labs/evidencias/lab-25-kafka-event-streaming/lab-25-kafka-event-streaming.md`.
+- Propósito: implementar event streaming con Apache Kafka (topic, productor, consumidor, consumer group).
+- Implementación técnica:
+  - Infraestructura: `infra/docker-compose.kafka.yml` con Zookeeper y Kafka (Confluent 7.5.0).
+  - Topic: `orders.created` con 3 particiones (particionamiento por key = `orderId`).
+  - Productor FastAPI: `templates/fastapi/src/messaging/kafka_producer.py` con `enqueue_kafka_order()`.
+  - Consumidor con consumer group: `templates/fastapi/src/messaging/kafka_worker.py` con `run_kafka_worker()` y commit manual.
+  - Endpoint: `POST /api/v1/orders/create` (FastAPI) → Kafka topic (202 Accepted).
+  - Trazabilidad: `eventId`, `correlationId`, `partition`, `offset` en logs.
+- Validación:
+  - Kafka levantado en Docker con Zookeeper.
+  - Productor publica eventos con UUID y timestamp en topic `orders.created`.
+  - Consumer group configurable para instancias múltiples.
+  - Particionamiento por clave (orderId) garantiza orden causal dentro de partición.
+  - Commit manual implementado para manejo de errores e idempotencia.

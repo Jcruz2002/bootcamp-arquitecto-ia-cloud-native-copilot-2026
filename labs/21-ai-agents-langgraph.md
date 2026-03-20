@@ -27,7 +27,7 @@ StateGraph (LangGraph)
   │  run_tools              │
   │      │                  │
   │      ▼ (loop/fin)       │
-  │  Eval�ate_result        │
+  │  Eval�ate_result        │
   └─────────────────────────┘
     │
     ▼
@@ -154,6 +154,17 @@ OPENAI_API_VERSION=2025-01-01-preview
 - Tools con validación de parámetros de entrada.
 - Sin claves en código: solo variables de entorno.
 - Limitar tools al scope mínimo necesario.
+
+
+## Comandos sugeridos
+```bash
+git checkout -b lab-21
+git commit -m "lab21: # Agentes con LangGraph (Python + FastAPI)"
+git push origin lab-21
+```
+
+
+
 
 ## Rúbrica
 - 40% grafo funcional con estados, nodos y arista condicional.

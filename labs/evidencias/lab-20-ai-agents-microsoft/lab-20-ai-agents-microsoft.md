@@ -131,6 +131,79 @@ Esperado: HTTP 400 por validacion de entrada.
 - Enviar un prompt mayor a 1000 caracteres.
 - Esperado: HTTP 400 por regla de validacion/sanitizacion.
 
+## Resumen de ejecuciones y validaciones
+
+Los prompts ejecutados generaron los siguientes resultados clave:
+
+**Prompt "Summarize the active users in the system"** retornó HTTP 200 con un reporte que incluye `Total`, `Active`, `Inactive` y modo `fallback`. Esto confirma que el agente usa datos reales del sistema y responde correctamente incluso sin credenciales de Azure OpenAI.
+
+**Prompt "Generate a short executive report of user activity..."** retornó HTTP 200 demostrando que el agente adapta el formato de salida según la intención del prompt (resumen ejecutivo), manteniendo coherencia con los datos.
+
+**Prompt vacío** (`""`) retornó HTTP 400 por validación de entrada, asegurando que se evita ejecutar el agente con payloads inválidos.
+
+**Prompt > 1000 caracteres** retornó HTTP 400 por regla de sanitización, limitando el riesgo de abuso y manteniendo los límites definidos.
+
+## Casos de ejecución
+
+### Caso 1 - Resumen general de usuarios
+Prompt ejecutado:
+```json
+{
+   "prompt": "Summarize the active users in the system"
+}
+```
+
+Resultado obtenido:
+```text
+HEALTH:200
+AGENT:200
+{"report":"User Activity Report\nGeneratedAt(UTC): ...\nTotal: 89. Active: 89. Inactive: 0.\nMode: fallback (no Azure OpenAI configuration)."}
+```
+
+Significado:
+- El endpoint del agente respondió correctamente con datos reales del sistema.
+- El reporte incluye resumen cuantitativo (total, activos, inactivos).
+- El sufijo `Mode: fallback` confirma que no se usó Azure OpenAI por ausencia de variables de entorno, pero el flujo del agente sigue funcionando.
+
+### Caso 2 - Prompt ejecutivo
+Prompt ejecutado:
+```json
+{
+   "prompt": "Generate a short executive report of user activity with total, active and inactive users"
+}
+```
+
+Resultado obtenido:
+- HTTP `200`.
+- Reporte en texto con métricas de usuarios.
+
+Significado:
+- El agente adapta el formato de salida según la intención del prompt (resumen ejecutivo), manteniendo coherencia con los datos del sistema.
+
+### Caso 3 - Validación de entrada (prompt vacío)
+Prompt ejecutado:
+```json
+{
+   "prompt": ""
+}
+```
+
+Resultado obtenido:
+- HTTP `400` por validación del request.
+
+Significado:
+- Se aplica control de seguridad en la entrada para evitar prompts inválidos antes de ejecutar el agente.
+
+### Caso 4 - Validación por longitud máxima
+Prompt ejecutado:
+- Cadena de más de 1000 caracteres.
+
+Resultado obtenido:
+- HTTP `400` por regla de sanitización/validación.
+
+Significado:
+- Se limita el tamaño del prompt para reducir riesgos de abuso y mantener el agente dentro de los límites definidos del laboratorio.
+
 ## Problemas encontrados y solucion
 1. Error HTTP 500 por metadata de validacion en record primario de `AgentReportRequest`.
    - Solucion: cambiar a clase DTO con atributos en propiedades (`[Required]`, `[MaxLength]`).
