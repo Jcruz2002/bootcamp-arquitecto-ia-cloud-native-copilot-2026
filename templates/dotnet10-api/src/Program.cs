@@ -1,4 +1,5 @@
 using Bootcamp.Api.Application;
+using Bootcamp.Api.Application.Agent;
 using Bootcamp.Api.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<AppDb>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<UsersPlugin>();
+builder.Services.AddScoped<IAgentService, AgentService>();
 
 // Cache distribuido para lecturas frecuentes (Lab 12).
 var redisConnection = builder.Configuration["Redis:ConnectionString"];

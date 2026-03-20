@@ -162,3 +162,19 @@
   - `npm run test:cov` OK.
   - `npm run test:e2e` OK (6 pruebas en verde).
   - Docker: imagen `nestjs-api:local` construida y contenedor validado con `GET /health` = 200.
+
+## Registro Lab 20
+- Evidencia: `labs/evidencias/lab-20-ai-agents-microsoft/lab-20-ai-agents-microsoft.md`.
+- Propósito: integrar agente con Microsoft Semantic Kernel en la API .NET existente mediante endpoint HTTP.
+- Implementación técnica:
+  - Servicio de agente con Semantic Kernel y modo fallback en `templates/dotnet10-api/src/Application/Agent/AgentService.cs`.
+  - Plugin de tools reales (`get_active_users`, `summarize_users`, `format_report`) en `templates/dotnet10-api/src/Application/Agent/UsersPlugin.cs`.
+  - Sanitización/validación de prompt en `templates/dotnet10-api/src/Application/Agent/AgentPromptSanitizer.cs`.
+  - Endpoint `POST /api/v1/agent/report` en `templates/dotnet10-api/src/Controllers/AgentController.cs`.
+  - Registro DI del agente en `templates/dotnet10-api/src/Program.cs`.
+- Validación:
+  - `dotnet build` OK (warnings de paquetes preview/advisories).
+  - `GET /health` = 200.
+  - `POST /api/v1/agent/report` = 200 con reporte generado.
+  - Logs con invocación de tools (`get_active_users`, `summarize_users`, `format_report`).
+  - Verificación de seguridad (`git grep`) sin claves hardcodeadas.

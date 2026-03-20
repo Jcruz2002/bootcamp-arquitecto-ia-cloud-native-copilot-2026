@@ -113,6 +113,15 @@ curl -X POST http://localhost:5000/agent/report \
   -d '{"prompt": "Summarize the active users in the system"}'
 ```
 
+## Comandos sugeridos
+```bash
+git checkout -b lab-20
+git commit -m "lab20: Agentes con Microsoft Semantic Kernel y Azure AI FoundryL"
+git push origin lab-20
+```
+
+
+
 ## Variables de entorno requeridas
 ```env
 AZURE_OPENAI_ENDPOINT=https://tu-recurso.openai.azure.com/

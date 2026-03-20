@@ -13,7 +13,7 @@ Construir una API RESTful con NestJS, TypeORM, autenticación JWT y pruebas auto
 ```bash
 git checkout -b lab-19
 git commit -m "lab19: NestJS API con TypeScript y PostgreSQL"
-git push origin lab-9
+git push origin lab-1vl9
 ```
 
 
