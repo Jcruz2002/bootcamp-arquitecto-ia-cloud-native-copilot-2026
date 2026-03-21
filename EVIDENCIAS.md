@@ -225,3 +225,19 @@
   - Consumer group configurable para instancias múltiples.
   - Particionamiento por clave (orderId) garantiza orden causal dentro de partición.
   - Commit manual implementado para manejo de errores e idempotencia.
+
+## Registro Lab 26
+- Evidencia: `labs/evidencias/lab-26-azure-apim/lab-26-azure-apim.md`.
+- Propósito: publicar API en Azure API Management con seguridad OIDC/JWT, rate limit y trazabilidad.
+- Estado final APIM: `Succeeded` (servicio `apimbiblioteca26`, resource group `biblioteca-api`).
+- API publicada: `biblioteca-api` en path `biblioteca-api`.
+- Policies activas:
+  - `rate-limit` 30 llamadas / 60 segundos.
+  - `validate-jwt` (Entra ID) + `x-correlation-id`.
+- Validación funcional completada:
+  - 200 OK con llamada valida.
+  - 429 al superar limite de consumo (burst).
+  - 401 sin token con policy JWT activa.
+- Swagger/APIM:
+  - Swagger backend operativo en `/swagger/index.html`.
+  - OpenAPI exportado desde APIM para pruebas en `labs/evidencias/lab-26-azure-apim/openapi-apim/biblioteca-api_openapi+json.json`.

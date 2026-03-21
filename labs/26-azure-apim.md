@@ -75,7 +75,7 @@ Ejemplo policy XML:
 - Superar límite de rate produce 429.
 - APIM registra métricas y logs de consumo.
 
-## R�brica
+## R�brica
 - 40% publicación correcta de API y seguridad.
 - 30% policies (rate limit + validación JWT) funcionando.
 - 30% evidencia de observabilidad y pruebas 200/401/429.
@@ -89,3 +89,10 @@ Ejemplo policy XML:
   - captura de API publicada en APIM,
   - pruebas 200/401/429,
   - captura de métricas/logs.
+
+## Comandos sugeridos
+```bash
+git checkout -b lab-26
+git commit -m "lab26 - API Management con Azure API Management"
+git push origin lab-26
+```
